@@ -1,6 +1,8 @@
 # LeetCode Plugin Code Template
 
-This repository allows you to debug LeetCode algorithm codes locally in **vscode** or **Jetbrains IDE**, currently supports **Java/C++/Python/Golang/JavaScript**.
+This repository is forked from https://github.com/labuladong/lc-plugin-template.git, which allows you to debug LeetCode algorithm codes locally in **vscode** or **Jetbrains IDE**, currently supports **Java/C++/Python/Golang/JavaScript**.
+
+I use this repository to keep track of the LeetCode problems I've solved.
 
 Detailed configuration methods are available in [Jetbrains LeetCode Plugin Usage Guide](https://labuladong.online/algo/en/intro/jetbrains/) and [vscode LeetCode Plugin Usage Guide](https://labuladong.online/algo/en/intro/vscode/).
 
