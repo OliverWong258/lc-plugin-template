@@ -19,52 +19,31 @@ public class KthLargestElementInAnArray {
         }
 
         int partition(int left, int right, int[] nums, int k) {
-            if (left == right) {
-                return nums[left];
-            }
+            int target = nums[right];
+            int p = left;
 
-            int index = (int)(Math.random() * (right - left) + left);
-            
-            // switch nums[index] and nums[left]
-            int tmp = nums[left];
-            nums[left] = nums[index];
-            nums[index] = tmp;
-
-            int l = left;
-            int r = right;
-            int i = left + 1;
-            int pivot = nums[left];
-
-            // partion in decreaseing order
-            while (i <= r) {
-                if (nums[i] > pivot) {
-                    tmp = nums[i];
-                    nums[i] = nums[l];
-                    nums[l] = tmp;
-                    i++;
-                    l++;
-                }
-                else if (nums[i] == pivot) {
-                    i++;
-                }
-                else {
-                    tmp = nums[r];
-                    nums[r] = nums[i];
-                    nums[i] = tmp;
-                    // i++;
-                    r--;
+            for (int i = left; i < right; ++i) {
+                if (nums[i] > target) {
+                    int tmp = nums[i];
+                    nums[i] = nums[p];
+                    nums[p] = tmp;
+                    p++;
                 }
             }
 
-            if (k - 1 < l) {
-                return partition(left, l - 1, nums, k);
+            nums[right] = nums[p];
+            nums[p] = target;
+
+            if (p + 1 == k) {
+                return target;
             }
-            else if (k - 1 > r) {
-                return partition(r + 1, right, nums, k);
+            else if (p + 1 < k) {
+                return partition(p + 1, right, nums, k);
             }
             else {
-                return nums[k - 1];
+                return partition(left, p - 1, nums, k);
             }
+            
         }
     }
     // @lc code=end

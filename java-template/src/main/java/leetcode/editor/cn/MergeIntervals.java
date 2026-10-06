@@ -16,22 +16,21 @@ public class MergeIntervals {
     class Solution {
         public int[][] merge(int[][] intervals) {
             Arrays.sort(intervals, (a, b) -> (a[0] - b[0]));
-            Deque<int[]> mergedIntervals = new ArrayDeque<>();
+            Deque<int[]> dq = new ArrayDeque<>();
 
             for (int i = 0; i < intervals.length; ++i) {
-                if (mergedIntervals.isEmpty() || mergedIntervals.peekLast()[1] < intervals[i][0]) {
-                    mergedIntervals.addLast(intervals[i]);
+                if (dq.isEmpty() || dq.peekLast()[1] < intervals[i][0]) {
+                    dq.addLast(intervals[i]);
                 }
                 else {
-                    int[] prevInterval = mergedIntervals.pollLast();
-                    mergedIntervals.addLast(new int[]{prevInterval[0], Math.max(prevInterval[1], intervals[i][1])});
+                    dq.peekLast()[1] = Math.max(dq.peekLast()[1], intervals[i][1]);
                 }
             }
 
-            int[][] result = new int[mergedIntervals.size()][2];
+            int[][] result = new int[dq.size()][2];
 
             for (int i = 0; i < result.length; ++i) {
-                result[i] = mergedIntervals.pollFirst();
+                result[i] = dq.pollFirst();
             }
 
             return result;

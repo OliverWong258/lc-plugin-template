@@ -14,67 +14,70 @@ public class LruCache {
 
     // @lc code=start
     class LRUCache {
-        
+        private int capacity;
+        Node head;
+        Node tail;
+        Map<Integer, Node> map;
+
         class Node {
             int key;
             int value;
             Node previous;
             Node next;
+
             Node(int key, int value) {
                 this.key = key;
                 this.value = value;
             }
         }
-
-        int cap;
-        Map<Integer, Node> map = new HashMap<>();
-        Node head = new Node(-1, -1);
-        Node tail = new Node(-1, -1);
         
         public LRUCache(int capacity) {
-            this.cap = capacity;    
+            this.capacity = capacity;
+            head = new Node(-1, -1);
+            tail = new Node(-1, -1);
+            map = new HashMap<>();
             head.next = tail;
             tail.previous = head;
         }
-        
-        public int get(int key) {
+
+        int get(int key) {
             if (!map.containsKey(key)) {
                 return -1;
-            }    
-            Node node = map.get(key);
-            remove(node);
-            addFirst(node);
-            return node.value;
+            }
+            else {
+                Node node = map.get(key);
+                removeNode(node);
+                addFirst(node);
+                return node.value;
+            }
         }
-        
-        public void put(int key, int value) {
+
+        void put(int key, int value) {
             if (map.containsKey(key)) {
                 Node node = map.get(key);
                 node.value = value;
-                remove(node);
+                removeNode(node);
                 addFirst(node);
-                return;
             }
             else {
                 Node node = new Node(key, value);
                 addFirst(node);
                 map.put(key, node);
-                if (map.size() > cap) {
+                if (map.size() > capacity) {
                     map.remove(tail.previous.key);
-                    remove(tail.previous);
+                    removeNode(tail.previous);
                 }
-                return;
             }
         }
 
         void addFirst(Node node) {
-            node.next = head.next;
             node.previous = head;
+            node.next = head.next;
             head.next.previous = node;
             head.next = node;
         }
 
-        void remove(Node node) {
+        void removeNode(Node node) {
             node.previous.next = node.next;
             node.next.previous = node.previous;
         }

@@ -20,7 +20,7 @@ public class LongestSubstringWithoutRepeatingCharacters {
             Set<Character> window = new HashSet<>();
             int result = 0;
 
-            for (; right < s.length(); right++) {
+            for (; right < s.length(); ++right) {
                 char c = s.charAt(right);
                 if (!window.contains(c)) {
                     window.add(c);
@@ -29,13 +29,12 @@ public class LongestSubstringWithoutRepeatingCharacters {
                 else {
                     while (left < right) {
                         char removed = s.charAt(left);
+                        left++;
                         if (removed == c) {
-                            left++;
                             break;
                         }
                         else {
                             window.remove(removed);
-                            left++;
                         }
                     }
                 }
