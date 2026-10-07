@@ -27,7 +27,10 @@ public class LowestCommonAncestorOfABinaryTree {
      */
     class Solution {
         public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-            if (root == null || root.val == p.val || root.val == q.val) {
+            if (root == null) {
+                return null;
+            }
+            if (root.val == p.val || root.val == q.val) {
                 return root;
             }
             TreeNode leftResult = lowestCommonAncestor(root.left, p, q);
@@ -35,9 +38,7 @@ public class LowestCommonAncestorOfABinaryTree {
             if (leftResult != null && rightResult != null) {
                 return root;
             }
-            else {
-                return leftResult != null ? leftResult : rightResult;
-            }
+            return leftResult != null ? leftResult : rightResult;
         }
     }
     // @lc code=end
