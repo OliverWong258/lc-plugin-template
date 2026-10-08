@@ -16,19 +16,32 @@ public class TopKFrequentElements {
     class Solution {
         public int[] topKFrequent(int[] nums, int k) {
             Map<Integer, Integer> num2freq = new HashMap<>();
-            PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> (b[1] - a[1]));
             int[] result = new int[k];
+            List<Integer>[] buckets = new List[nums.length + 1];
+            int idx = 0;
 
             for (int num : nums) {
                 num2freq.put(num, num2freq.getOrDefault(num, 0) + 1);
             }
 
             for (int num : num2freq.keySet()) {
-                pq.add(new int[]{num, num2freq.get(num)});
+                int count = num2freq.get(num);
+                if (buckets[count] == null) {
+                    buckets[count] = new ArrayList<>();
+                }
+                buckets[count].add(num);
             }
 
-            for (int i = 0; i < k; ++i) {
-                result[i] = pq.poll()[0];
+            for (int i = nums.length; i >= 0 && idx < k; --i) {
+                if (buckets[i] != null) {
+                    for (int num : buckets[i]) {
+                        result[idx] = num;
+                        idx++;
+                        if (idx == k) {
+                            break;
+                        }
+                    }
+                }
             }
 
             return result;
